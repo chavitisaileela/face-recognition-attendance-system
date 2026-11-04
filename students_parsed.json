@@ -1,0 +1,398 @@
+[
+  {
+    "s_no": 1,
+    "prn": "2023BTDS002",
+    "name": "AROCKIA SHAFIYA J",
+    "section": "B"
+  },
+  {
+    "s_no": 2,
+    "prn": "2023BTDS003",
+    "name": "MANNENGI MANEESH REDDY",
+    "section": "B"
+  },
+  {
+    "s_no": 3,
+    "prn": "2023BTDS004",
+    "name": "SAM BENNI S",
+    "section": "B"
+  },
+  {
+    "s_no": 4,
+    "prn": "2023BTDS005",
+    "name": "GOPAVARAM SHASHINDRA REDDY",
+    "section": "B"
+  },
+  {
+    "s_no": 5,
+    "prn": "2023BTDS006",
+    "name": "SIVA RANJINI R",
+    "section": "B"
+  },
+  {
+    "s_no": 6,
+    "prn": "2023BTDS007",
+    "name": "ADAPA DINESH",
+    "section": "B"
+  },
+  {
+    "s_no": 7,
+    "prn": "2023BTDS009",
+    "name": "FATHIMA P R",
+    "section": "B"
+  },
+  {
+    "s_no": 8,
+    "prn": "2023BTDS012",
+    "name": "KURAKU YALLAIAH",
+    "section": "B"
+  },
+  {
+    "s_no": 9,
+    "prn": "2023BTDS014",
+    "name": "MARUR SUSHMITHA",
+    "section": "B"
+  },
+  {
+    "s_no": 10,
+    "prn": "2023BTDS015",
+    "name": "ANNAM KIRAN KUMAR",
+    "section": "B"
+  },
+  {
+    "s_no": 11,
+    "prn": "2023BTDS016",
+    "name": "MUTTANGI NARENDRA",
+    "section": "B"
+  },
+  {
+    "s_no": 12,
+    "prn": "2023BTDS017",
+    "name": "MORLA MANOHAR",
+    "section": "B"
+  },
+  {
+    "s_no": 13,
+    "prn": "2023BTDS018",
+    "name": "KUNDELLA VENKATA DURGAPRASAD",
+    "section": "B"
+  },
+  {
+    "s_no": 14,
+    "prn": "2023BTDS021",
+    "name": "SUTHI VEERENDRA TATAJI",
+    "section": "B"
+  },
+  {
+    "s_no": 15,
+    "prn": "2023BTDS024",
+    "name": "BATHINA KEZIA",
+    "section": "B"
+  },
+  {
+    "s_no": 16,
+    "prn": "2023BTDS025",
+    "name": "MADDURI JAYAPRABHAS",
+    "section": "B"
+  },
+  {
+    "s_no": 17,
+    "prn": "2023BTDS026",
+    "name": "PUPPALA LAKSHMI PRAVEENA",
+    "section": "B"
+  },
+  {
+    "s_no": 18,
+    "prn": "2023BTDS027",
+    "name": "LAKSHMAN M",
+    "section": "B"
+  },
+  {
+    "s_no": 19,
+    "prn": "2023BTDS028",
+    "name": "VENNAPUSA MAHENDRA REDDY",
+    "section": "B"
+  },
+  {
+    "s_no": 20,
+    "prn": "2023BTDS029",
+    "name": "PRINCE KUMAR",
+    "section": "B"
+  },
+  {
+    "s_no": 21,
+    "prn": "2023BTDS030",
+    "name": "ANKIT KUMAR",
+    "section": "B"
+  },
+  {
+    "s_no": 22,
+    "prn": "2023BTDS031",
+    "name": "SAMRAT KUMAR",
+    "section": "B"
+  },
+  {
+    "s_no": 23,
+    "prn": "2023BTDS034",
+    "name": "ESAKKIAPPAN C",
+    "section": "B"
+  },
+  {
+    "s_no": 24,
+    "prn": "2023BTDS036",
+    "name": "ACHANTA MANIKANTA",
+    "section": "B"
+  },
+  {
+    "s_no": 25,
+    "prn": "2023BTDS040",
+    "name": "GOULLA SUDARSHAN REDDY",
+    "section": "B"
+  },
+  {
+    "s_no": 26,
+    "prn": "2023BTDS043",
+    "name": "YARRAMACHU NIMITHA",
+    "section": "B"
+  },
+  {
+    "s_no": 27,
+    "prn": "2023BTDS044",
+    "name": "RAJAVOLU SIMHA VARDHAN REDDY",
+    "section": "B"
+  },
+  {
+    "s_no": 28,
+    "prn": "2023BTDS045",
+    "name": "KETHAGANI NARAYANA",
+    "section": "B"
+  },
+  {
+    "s_no": 29,
+    "prn": "2023BTDS046",
+    "name": "ASAM MUNI THARUN REDDY",
+    "section": "B"
+  },
+  {
+    "s_no": 30,
+    "prn": "2023BTDS047",
+    "name": "PALLE JOSHI REDDY",
+    "section": "B"
+  },
+  {
+    "s_no": 31,
+    "prn": "2023BTDS049",
+    "name": "VADDE SIMHADRI",
+    "section": "B"
+  },
+  {
+    "s_no": 32,
+    "prn": "2023BTDS050",
+    "name": "VADDE THARUN",
+    "section": "B"
+  },
+  {
+    "s_no": 33,
+    "prn": "2023BTDS051",
+    "name": "JALLA SIVAJI NAIDU",
+    "section": "B"
+  },
+  {
+    "s_no": 34,
+    "prn": "2023BTDS052",
+    "name": "SANGALA RAMYA SREE",
+    "section": "B"
+  },
+  {
+    "s_no": 35,
+    "prn": "2023BTDS053",
+    "name": "NOOKA HARSHAVARDHAN REDDY",
+    "section": "B"
+  },
+  {
+    "s_no": 36,
+    "prn": "2023BTDS055",
+    "name": "CHAVITI SAI LEELA",
+    "section": "B"
+  },
+  {
+    "s_no": 37,
+    "prn": "2023BTDS057",
+    "name": "PIDUGU DEEPIKA",
+    "section": "B"
+  },
+  {
+    "s_no": 38,
+    "prn": "2023BTDS058",
+    "name": "JOSEPH D ABISHAK",
+    "section": "B"
+  },
+  {
+    "s_no": 39,
+    "prn": "2023BTDS060",
+    "name": "PALELLI KAVYA",
+    "section": "B"
+  },
+  {
+    "s_no": 40,
+    "prn": "2023BTDS061",
+    "name": "SETTIPALLI MOUNISH REDDY",
+    "section": "B"
+  },
+  {
+    "s_no": 41,
+    "prn": "2023BTDS063",
+    "name": "MEESALA VAMSI KRISHNA",
+    "section": "B"
+  },
+  {
+    "s_no": 42,
+    "prn": "2023BTDS065",
+    "name": "VADDI MOUNIKA",
+    "section": "B"
+  },
+  {
+    "s_no": 43,
+    "prn": "2023BTDS068",
+    "name": "PRATHIPATI MANOGNA",
+    "section": "B"
+  },
+  {
+    "s_no": 44,
+    "prn": "2023BTDS069",
+    "name": "ITREDDY KARTHIK HARSHAVARDHAN REDDY",
+    "section": "B"
+  },
+  {
+    "s_no": 45,
+    "prn": "2023BTDS070",
+    "name": "M SARAVANA GANES",
+    "section": "B"
+  },
+  {
+    "s_no": 46,
+    "prn": "2023BTDS071",
+    "name": "AKETI CHAKRADHARA",
+    "section": "B"
+  },
+  {
+    "s_no": 47,
+    "prn": "2023BTDS072",
+    "name": "ESHAN EANI PARAPPIL",
+    "section": "B"
+  },
+  {
+    "s_no": 48,
+    "prn": "2023BTDS073",
+    "name": "JAKKALA BOYA VIJAY BHASKAR NAIDU",
+    "section": "B"
+  },
+  {
+    "s_no": 49,
+    "prn": "2023BTDS074",
+    "name": "MOKULA PAVAN KUMAR REDDY",
+    "section": "B"
+  },
+  {
+    "s_no": 50,
+    "prn": "2023BTDS075",
+    "name": "TALARI THARUN",
+    "section": "B"
+  },
+  {
+    "s_no": 51,
+    "prn": "2023BTDS076",
+    "name": "PINJARI AZAR BASHA",
+    "section": "B"
+  },
+  {
+    "s_no": 52,
+    "prn": "2023BTDS077",
+    "name": "MALLA VISHNU VARDHAN",
+    "section": "B"
+  },
+  {
+    "s_no": 53,
+    "prn": "2023BTDS079",
+    "name": "SANTHOSH MADHAVAN R.",
+    "section": "B"
+  },
+  {
+    "s_no": 54,
+    "prn": "2023BTDS080",
+    "name": "AAVIN S.",
+    "section": "B"
+  },
+  {
+    "s_no": 55,
+    "prn": "2023BTDS081",
+    "name": "KOCHERLA PRUDHVI RAJ",
+    "section": "B"
+  },
+  {
+    "s_no": 56,
+    "prn": "2023BTDS082",
+    "name": "MOHAMMAD RAHIMUNISSA BEGUM",
+    "section": "B"
+  },
+  {
+    "s_no": 57,
+    "prn": "2023BTDS083",
+    "name": "MARELLA GOWTHAM ROYAL VIKRAMADITHYA",
+    "section": "B"
+  },
+  {
+    "s_no": 58,
+    "prn": "2023BTDS084",
+    "name": "GADE SREEDHAR",
+    "section": "B"
+  },
+  {
+    "s_no": 59,
+    "prn": "2023BTDS085",
+    "name": "HEMALATHA CHALLAGUNDLA",
+    "section": "B"
+  },
+  {
+    "s_no": 60,
+    "prn": "2023BTDS086",
+    "name": "SAHAYA GLANCY",
+    "section": "B"
+  },
+  {
+    "s_no": 61,
+    "prn": "2023BTDS087",
+    "name": "SURYA SPHOORTHI A",
+    "section": "B"
+  },
+  {
+    "s_no": 62,
+    "prn": "2023BTDS088",
+    "name": "POOJARI BEEMESWARAIAH",
+    "section": "B"
+  },
+  {
+    "s_no": 63,
+    "prn": "2023BTDS089",
+    "name": "ANTONY DANIEL A",
+    "section": "B"
+  },
+  {
+    "s_no": 64,
+    "prn": "2023BTDS090",
+    "name": "RISHI R",
+    "section": "B"
+  },
+  {
+    "s_no": 65,
+    "prn": "2023BTAM040",
+    "name": "Veera Reddy",
+    "section": "A"
+  },
+  {
+    "s_no": 66,
+    "prn": "2023BTAM055",
+    "name": "Aditya",
+    "section": "A"
+  }
+]

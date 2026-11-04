@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FACE RECOGNITION BASED ATTENDANCE MONITORING SYSTEM</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>">
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <header class="navbar" id="mainNavbar">
+    <div class="brand">
+      <img src="/static/images/logo.png" alt="Logo" class="brand-logo" onerror="this.style.display='none'; document.getElementById('brandIconFallback').style.display='flex';">
+      <div id="brandIconFallback" class="brand-icon" style="display:none;">🎓</div>
+      <div>
+        <h1 class="brand-title">FACE RECOGNITION BASED ATTENDANCE MONITORING SYSTEM</h1>
+        <p class="brand-subtitle">Real-Time Face Recognition &bull; Automatic Attendance Monitoring</p>
+      </div>
+    </div>
+
+    <!-- Navigation Menu Button & Grid -->
+    <div class="nav-menu-wrapper">
+      <button class="nav-menu-toggle" id="btnNavMenuToggle" aria-label="Menu" title="Menu">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+      <nav class="nav-grid" id="adminNavLinks">
+        <a href="#dashboard"          class="nav-link active" data-page="pageDashboard">📊 Dashboard</a>
+        <a href="#students"           class="nav-link" data-page="pageStudents">👥 Students</a>
+        <a href="#face-capture"       class="nav-link" data-page="pageCapture">📷 Capture</a>
+        <a href="#face-training"      class="nav-link" data-page="pageTraining">⚡ Training</a>
+        <a href="#face-testing"       class="nav-link" data-page="pageTesting">🧪 Testing</a>
+        <a href="#subjects"           class="nav-link" data-page="pageSubjects">📚 Subjects</a>
+        <a href="#start-attendance"   class="nav-link" data-page="pageStartAttendance">🚀 Start Attd</a>
+        <a href="#attendance-records" class="nav-link" data-page="pageRecords">📋 Records</a>
+        <a href="#export"             class="nav-link" data-page="pageExport">📥 Export</a>
+        <a href="#about"              class="nav-link" data-page="pageAbout">ℹ️ About</a>
+        <a href="#register"           class="nav-link" data-page="pageRegister">📝 Register</a>
+      </nav>
+    </div>
+
+    <div class="nav-actions">
+      <div class="live-clock" id="liveClock">
+        <span class="live-dot"></span> Loading...
+      </div>
+      <button class="btn btn-outline" id="btnToggleAudio" style="font-size:0.8rem;padding:0.35rem 0.75rem;">
+        🔔 Audio: ON
+      </button>
+      <div id="userBadgeArea" style="display:flex;align-items:center;gap:0.5rem;">
+        <span class="user-badge" id="navUserName">Faculty</span>
+        <button class="btn btn-danger" id="btnLogout" style="font-size:0.75rem;padding:0.35rem 0.65rem;">Logout</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <!-- ===================== PAGE 1: LOGIN ===================== -->
+    <section id="pageLogin" class="page-view">
+      <div class="login-wrapper">
+        <div class="login-card">
+          <div class="login-header">
+            <img src="/static/images/logo.png" alt="Logo" style="height:56px;margin:0 auto 1rem;display:block;" onerror="this.style.display='none'">
+            <h2>Faculty / Admin Login</h2>
+            <p>Authorized personnel access only</p>
+          </div>
+          <form id="loginForm">
+            <div class="form-group">
+              <label for="loginUsername">Username / Faculty ID</label>
+              <input type="text" id="loginUsername" class="input-control" placeholder="Enter username" required>
+            </div>
+            <div class="form-group">
+              <label for="loginPassword">Password</label>
+              <input type="password" id="loginPassword" class="input-control" placeholder="Enter password" required>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;padding:0.75rem;margin-top:1rem;">
+              🔐 Sign In to Attendance System
+            </button>
+            <div style="text-align:center;margin-top:1rem;font-size:0.85rem;color:var(--text-muted);">
+              New Faculty? <a href="#register" style="color:var(--accent-blue);font-weight:600;text-decoration:none;">Create Faculty Account</a> &bull; <a href="#about" style="color:#94a3b8;text-decoration:none;">System Overview</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== PAGE 1B: REGISTRATION ===================== -->
+    <section id="pageRegister" class="page-view">
+      <div class="login-wrapper">
+        <div class="login-card" style="max-width:440px;">
+          <div class="login-header">
+            <img src="/static/images/logo.png" alt="Logo" style="height:56px;margin:0 auto 1rem;display:block;" onerror="this.style.display='none'">
+            <h2>Faculty Registration</h2>
+            <p>Create an authorized faculty account</p>
+          </div>
+          <form id="registerForm">
+            <div class="form-group">
+              <label for="regFullName">Full Name *</label>
+              <input type="text" id="regFullName" class="input-control" placeholder="e.g. Dr. John Doe" required>
+            </div>
+            <div class="form-group">
+              <label for="regUsername">Username / ID *</label>
+              <input type="text" id="regUsername" class="input-control" placeholder="e.g. john_faculty" required>
+            </div>
+            <div class="form-group">
+              <label for="regPassword">Password * (min 6 characters)</label>
+              <input type="password" id="regPassword" class="input-control" placeholder="Enter secure password" required minlength="6">
+            </div>
+            <div class="form-group">
+              <label for="regAdminSecret">Registration Passcode *</label>
+              <input type="password" id="regAdminSecret" class="input-control" placeholder="Enter registration passcode (eduface2024)" required>
+              <small style="color:var(--text-muted);font-size:0.75rem;">Default passcode for this project is <code>eduface2024</code></small>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;padding:0.75rem;margin-top:0.75rem;">
+              📝 Register &amp; Create Account
+            </button>
+            <div style="text-align:center;margin-top:1rem;font-size:0.85rem;color:var(--text-muted);">
+              Already registered? <a href="#login" style="color:var(--accent-blue);font-weight:600;text-decoration:none;">Back to Sign In</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== PAGE 1C: ABOUT & SAMPLES/TRIAL ===================== -->
+    <section id="pageAbout" class="page-view">
+      <div class="panel-card" style="max-width:900px;margin:0 auto;">
+        <div class="panel-header">
+          <div class="panel-title"><span>ℹ️ About FACE RECOGNITION BASED ATTENDANCE MONITORING SYSTEM</span></div>
+          <a href="#login" class="btn btn-outline" style="font-size:0.8rem;">🔐 Go to Login</a>
+        </div>
+        <div class="panel-body" style="padding:1.75rem;line-height:1.6;">
+          <div style="display:flex;align-items:center;gap:1.5rem;margin-bottom:1.5rem;background:var(--bg-secondary);padding:1.25rem;border-radius:var(--radius-md);border:1px solid var(--border-color);">
+            <img src="/static/images/logo.png" alt="Logo" style="height:64px;border-radius:8px;" onerror="this.style.display='none'">
+            <div>
+              <h2 style="font-size:1.4rem;color:#fff;margin-bottom:0.25rem;">FACE RECOGNITION BASED ATTENDANCE MONITORING SYSTEM</h2>
+              <p style="color:var(--text-muted);font-size:0.88rem;">
+                A high-speed, contactless classroom attendance automation platform developed using Python, OpenCV LBPH, and FastAPI.
+              </p>
+            </div>
+          </div>
+
+          <h3 style="color:#93c5fd;font-size:1.1rem;margin-bottom:0.5rem;">🌟 Key System Highlights</h3>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1rem;margin-bottom:1.75rem;">
+            <div style="background:var(--bg-secondary);padding:1rem;border-radius:var(--radius-sm);border:1px solid var(--border-color);">
+              <h4 style="color:#34d399;margin-bottom:0.35rem;">⚡ Zero-Lag Processing</h4>
+              <p style="font-size:0.82rem;color:var(--text-muted);">Frame skipping, in-memory face cache, and single-instance CLAHE prevent camera stutter or UI freezing.</p>
+            </div>
+            <div style="background:var(--bg-secondary);padding:1rem;border-radius:var(--radius-sm);border:1px solid var(--border-color);">
+              <h4 style="color:#38bdf8;margin-bottom:0.35rem;">🎙️ Voice Announcements</h4>
+              <p style="font-size:0.82rem;color:var(--text-muted);">Speaks student names upon successful attendance and immediately warns when an unknown or unregistered face is detected.</p>
+            </div>
+            <div style="background:var(--bg-secondary);padding:1rem;border-radius:var(--radius-sm);border:1px solid var(--border-color);">
+              <h4 style="color:#f59e0b;margin-bottom:0.35rem;">📊 Multi-Format Sync</h4>
+              <p style="font-size:0.82rem;color:var(--text-muted);">Real-time logging to SQLite, auto-export to formatted Excel &amp; CSV with Faculty and Period breakdowns.</p>
+            </div>
+          </div>
+
+          <h3 style="color:#93c5fd;font-size:1.1rem;margin-bottom:0.5rem;">🧪 Interactive Trial &amp; Samples</h3>
+          <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:1rem;">
+            Test the live speech synthesizers and view how the system processes attendance and handles unknown detections below:
+          </p>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:1.5rem;">
+            <div style="background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.3);padding:1.25rem;border-radius:var(--radius-md);">
+              <h4 style="color:#34d399;margin-bottom:0.5rem;">🔊 Sample 1: Recognized Student (Present)</h4>
+              <p style="font-size:0.82rem;color:var(--text-muted);margin-bottom:0.75rem;">Simulates voice notification when registered student is verified.</p>
+              <button class="btn btn-success" id="btnTestVoicePresent" style="font-size:0.82rem;padding:0.4rem 0.9rem;">
+                ▶ Play "Aman Kumar Present"
+              </button>
+            </div>
+            <div style="background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.3);padding:1.25rem;border-radius:var(--radius-md);">
+              <h4 style="color:#f87171;margin-bottom:0.5rem;">🔊 Sample 2: Wrong / Unknown Face Detected</h4>
+              <p style="font-size:0.82rem;color:var(--text-muted);margin-bottom:0.75rem;">Simulates security alert when face does not match class roster.</p>
+              <button class="btn btn-danger" id="btnTestVoiceWrong" style="font-size:0.82rem;padding:0.4rem 0.9rem;">
+                ▶ Play "Absent, Wrong Face Detected"
+              </button>
+            </div>
+          </div>
+
+          <div style="background:var(--bg-secondary);border:1px solid var(--border-color);border-radius:var(--radius-sm);padding:1rem;margin-top:1rem;">
+            <h4 style="font-size:0.9rem;margin-bottom:0.35rem;color:#f3f4f6;">🎓 Workflow Step-by-Step</h4>
+            <ol style="font-size:0.82rem;color:var(--text-muted);padding-left:1.25rem;line-height:1.6;">
+              <li><strong>Sign In / Register:</strong> Authorized faculty logs into the system.</li>
+              <li><strong>Face Capture:</strong> Capture 15 photos per student (via Webcam, File Upload, or Mobile QR link).</li>
+              <li><strong>Face Training:</strong> Train LBPH model on captured photos.</li>
+              <li><strong>Face Testing:</strong> Verify recognition without marking attendance.</li>
+              <li><strong>Start Attendance:</strong> Choose subject, faculty, period and let camera auto-mark present with voice confirmations.</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== PAGE 2: DASHBOARD ===================== -->
+    <section id="pageDashboard" class="page-view active">
+
+      <!-- Session Banner (shows when active) -->
+      <div id="sessionBanner" class="session-banner" style="display:none;">
+        <div class="session-info">
+          <span class="live-dot"></span>
+          <strong>LIVE SESSION:</strong>
+          <span id="bannerSubject">--</span> &bull;
+          Section: <span id="bannerSection">--</span> &bull;
+          Period: <span id="bannerPeriod">--</span> &bull;
+          Faculty: <span id="bannerFaculty">--</span>
+        </div>
+        <button class="btn btn-danger" id="btnStopSession" style="font-size:0.82rem;padding:0.4rem 1rem;">
+          ⏹ Stop Attendance Session
+        </button>
+      </div>
+
+      <!-- Stats Grid -->
+      <div class="stats-grid">
+        <div class="stat-card stat-total">
+          <div class="stat-info">
+            <h3>Total Students</h3>
+            <div class="stat-value" id="dashTotalStudents">66</div>
+            <span class="stat-sub">Registered in class</span>
+          </div>
+          <div class="stat-icon">👥</div>
+        </div>
+        <div class="stat-card stat-present">
+          <div class="stat-info">
+            <h3>Present Today</h3>
+            <div class="stat-value" id="dashPresentStudents" style="color:#34d399;">0</div>
+            <span class="stat-sub" id="dashAttendancePct">0% Attendance</span>
+          </div>
+          <div class="stat-icon">✅</div>
+        </div>
+        <div class="stat-card stat-absent">
+          <div class="stat-info">
+            <h3>Absent Today</h3>
+            <div class="stat-value" id="dashAbsentStudents" style="color:#fb7185;">66</div>
+            <span class="stat-sub">Pending recognition</span>
+          </div>
+          <div class="stat-icon">❌</div>
+        </div>
+        <div class="stat-card stat-subject">
+          <div class="stat-info">
+            <h3>Active Subject</h3>
+            <div class="stat-value" id="dashActiveSubject" style="font-size:1rem;">---</div>
+            <span class="stat-sub" id="dashActiveSection">Section: ---</span>
+          </div>
+          <div class="stat-icon">📚</div>
+        </div>
+      </div>
+
+      <!-- Camera + Recognition Card -->
+      <div class="main-grid">
+        <div class="panel-card">
+          <div class="panel-header">
+            <div class="panel-title"><span>📷 Live Attendance Camera</span></div>
+            <div class="cam-switch-group">
+              <button class="cam-switch-btn active" id="btnDashHwCam">Hardware Camera</button>
+              <button class="cam-switch-btn" id="btnDashBrowserCam">Browser Webcam</button>
+            </div>
+          </div>
+          <div class="panel-body">
+            <!-- Camera is OFF by default. Starts only after "Start Attendance" -->
+            <div class="video-container" id="dashVideoContainer">
+              <div id="dashCameraOff" class="camera-off-placeholder">
+                <div style="font-size:3rem;margin-bottom:1rem;">📷</div>
+                <p style="font-size:1rem;font-weight:600;color:#93c5fd;">Camera is OFF</p>
+                <p style="font-size:0.85rem;color:var(--text-muted);margin-top:0.4rem;">
+                  Start an Attendance Session to activate the live camera
+                </p>
+                <button class="btn btn-primary" onclick="location.hash='#start-attendance'" style="margin-top:1rem;">
+                  🚀 Start Attendance Session
+                </button>
+              </div>
+              <img id="dashStreamImg" class="video-stream" style="display:none;" alt="Live Stream">
+              <video id="dashBrowserVideo" autoplay playsinline muted style="display:none;width:100%;height:100%;object-fit:contain;"></video>
+              <canvas id="dashBrowserCanvas" style="display:none;"></canvas>
+
+              <div class="feed-hud-overlay" id="dashHudOverlay" style="display:none;">
+                <div class="hud-badge" style="border-color:rgba(16,185,129,0.4);">
+                  <span class="live-dot"></span> SESSION ACTIVE
+                </div>
+                <div class="hud-badge" id="dashHudSubjectBadge" style="color:#93c5fd;">---</div>
+              </div>
+            </div>
+            <div class="video-controls">
+              <span style="font-size:0.78rem;color:var(--text-muted);">
+                🟢 Green = Recognized &amp; PRESENT &nbsp;|&nbsp; 🔵 Blue = Unknown Face (Ignored)
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recognition Highlight Card -->
+        <div class="panel-card">
+          <div class="panel-header">
+            <div class="panel-title"><span>⚡ Last Recognized Student</span></div>
+          </div>
+          <div class="panel-body recognition-feed">
+            <!-- PRESENT Announcement Overlay -->
+            <div id="presentOverlay" class="present-overlay" style="display:none;">
+              <div class="present-overlay-content">
+                <div class="present-checkmark">✔</div>
+                <div class="present-student-name" id="overlayStudentName">---</div>
+                <div class="present-student-prn" id="overlayStudentPRN">PRN: ---</div>
+                <div class="present-label">PRESENT</div>
+              </div>
+            </div>
+
+            <div class="latest-recognition-card" id="dashRecognitionCard">
+              <div class="latest-header"><span>● Real-time Detection</span></div>
+              <div class="student-card-content">
+                <div class="student-avatar" id="dashStudentAvatar">?</div>
+                <div class="student-details">
+                  <h4 id="dashStudentName">Awaiting Face Recognition...</h4>
+                  <div>
+                    <span class="roll-badge" id="dashStudentPRN">PRN: ---</span>
+                    <span class="section-badge" id="dashStudentSection">Sec: -</span>
+                  </div>
+                  <div class="time-badge" id="dashStudentTime">Stand in front of camera</div>
+                  <div style="margin-top:0.35rem;">
+                    <span id="dashConfidenceBadge" style="font-size:0.76rem;color:var(--accent-emerald);"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="cloud-sync-status" style="margin-top:0.75rem;">
+              <div class="sync-indicator">
+                <div class="sync-dot"></div>
+                <span><strong>Sync:</strong> SQLite + Excel + CSV</span>
+              </div>
+              <a href="/api/export/excel" class="btn btn-success" style="font-size:0.75rem;padding:0.3rem 0.65rem;">📥 Excel</a>
+            </div>
+
+            <div style="font-size:0.8rem;background:var(--bg-secondary);border:1px solid var(--border-color);border-radius:var(--radius-md);padding:0.85rem;margin-top:0.75rem;line-height:1.5;color:var(--text-muted);">
+              <strong style="color:var(--text-main);display:block;margin-bottom:0.2rem;">📌 Attendance Rules:</strong>
+              &bull; Only registered PDF students can be marked PRESENT.<br>
+              &bull; Unknown / unregistered faces are always ignored.<br>
+              &bull; 3 consecutive confirmations required before marking.<br>
+              &bull; Same student cannot be marked twice per session.
+            </div>
+
+            <div style="display:flex;gap:0.5rem;margin-top:0.75rem;">
+              <button class="btn btn-primary" onclick="location.hash='#start-attendance'" style="flex:1;justify-content:center;">
+                Change Session
+              </button>
+              <button class="btn btn-outline" onclick="location.hash='#attendance-records'" style="flex:1;justify-content:center;">
+                View Records
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== PAGE 3: STUDENT LIST ===================== -->
+    <section id="pageStudents" class="page-view">
+      <div class="panel-card">
+        <div class="panel-header">
+          <div class="panel-title"><span>👥 Class Student Database</span></div>
+          <div class="filter-group">
+            <select id="studentListSectionFilter" class="input-control">
+              <option value="All">All Sections (66)</option>
+              <option value="B">Section B (64)</option>
+              <option value="A">Section A (2)</option>
+            </select>
+            <input type="text" id="studentListSearch" class="input-control" placeholder="🔍 Search Name or PRN..." style="width:220px;">
+          </div>
+        </div>
+        <div class="panel-body">
+          <div class="table-responsive">
+            <table class="custom-table">
+              <thead>
+                <tr>
+                  <th>S.No</th><th>PRN / ID</th><th>Student Name</th>
+                  <th>Section</th><th>Face Status</th><th>Photos</th><th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="studentListTableBody">
+                <tr><td colspan="7" style="text-align:center;padding:2rem;">Loading students...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== PAGE 4: FACE CAPTURE ===================== -->
+    <section id="pageCapture" class="page-view">
+      <div class="panel-card">
+        <div class="panel-header">
+          <div class="panel-title"><span>📷 Student Face Registration</span></div>
+        </div>
+        <div class="panel-body">
+          <div class="registration-grid">
+            <div>
+              <div class="form-group">
+                <label for="captureStudentSelect">Select Student *</label>
+                <select id="captureStudentSelect" class="input-control" style="width:100%;"></select>
+              </div>
+              <div id="selectedStudentSummary" style="background:var(--bg-secondary);border:1px solid var(--border-color);border-radius:var(--radius-sm);padding:0.85rem;margin-bottom:1rem;font-size:0.85rem;">
+                <div><strong>Name:</strong> <span id="capStudentName">---</span></div>
+                <div><strong>PRN:</strong> <span id="capStudentPRN">---</span></div>
+                <div><strong>Section:</strong> <span id="capStudentSection">---</span></div>
+                <div><strong>Status:</strong> <span id="capStudentStatus">Face Not Registered</span></div>
+              </div>
+              <div class="form-group">
+                <label>Option B: Upload Student Photos (multiple files)</label>
+                <input type="file" id="adminUploadPhotos" class="input-control" multiple accept="image/*" style="width:100%;">
+                <button type="button" class="btn btn-outline" id="btnAdminUploadSubmit" style="width:100%;margin-top:0.5rem;justify-content:center;">
+                  Upload Selected Photos
+                </button>
+              </div>
+              <div style="margin-top:1.5rem;background:var(--bg-secondary);padding:1rem;border-radius:var(--radius-sm);border:1px solid var(--border-color);">
+                <label style="display:block;font-size:0.82rem;font-weight:600;margin-bottom:0.4rem;">📱 Option C: Mobile Camera Link for Student</label>
+                <p style="font-size:0.78rem;color:var(--text-muted);margin-bottom:0.75rem;">Student opens this temporary link on their phone to grant camera permission and capture their face photos.</p>
+                <button type="button" class="btn btn-outline" id="btnGenMobileLink" style="width:100%;justify-content:center;">🔗 Generate Mobile Link</button>
+                <div id="mobileLinkOutput" style="margin-top:0.5rem;display:none;">
+                  <input type="text" id="mobileLinkInput" class="input-control" readonly style="width:100%;font-size:0.78rem;background:#000;">
+                  <button type="button" class="btn btn-success" id="btnCopyMobileLink" style="width:100%;margin-top:0.35rem;justify-content:center;font-size:0.8rem;">Copy Mobile Link</button>
+                </div>
+              </div>
+              <div style="margin-top:1rem;text-align:center;">
+                <button type="button" class="btn btn-primary" onclick="location.hash='#face-training'">
+                  Next Step: Face Training &rarr;
+                </button>
+              </div>
+            </div>
+            <div>
+              <label style="font-size:0.82rem;font-weight:500;color:var(--text-muted);display:block;margin-bottom:0.35rem;">Option A: Webcam Rapid Capture</label>
+              <div class="capture-box">
+                <video id="adminCaptureVideo" class="capture-preview" autoplay playsinline muted></video>
+                <canvas id="adminCaptureCanvas" style="display:none;"></canvas>
+                <p style="font-size:0.88rem;color:var(--text-muted);margin-bottom:0.75rem;" id="adminCapturePrompt">Align student's face and click Capture.</p>
+                <button type="button" class="btn btn-success" id="btnAdminStartCapture">📷 Capture 15 Photos</button>
+                <div class="capture-progress" id="adminCaptureProgress">
+                  <div class="capture-progress-bar" id="adminCaptureProgressBar"></div>
+                </div>
+                <div id="adminCaptureStatus" style="font-size:0.8rem;color:var(--text-muted);margin-top:0.5rem;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== PAGE 5: MOBILE CAPTURE ===================== -->
+    <section id="pageMobileCapture" class="page-view">
+      <div class="login-wrapper">
+        <div class="login-card" style="max-width:520px;">
+          <div class="login-header">
+            <div class="brand-icon" style="margin:0 auto 0.75rem auto;">📱</div>
+            <h2>Student Mobile Face Capture</h2>
+            <p>Temporary Authorized Camera Submission</p>
+          </div>
+          <div id="mobileStudentCard" style="background:var(--bg-secondary);border:1px solid var(--border-color);border-radius:var(--radius-sm);padding:0.85rem;margin-bottom:1.25rem;">
+            <div><strong>Student Name:</strong> <span id="mobStudentName">Loading...</span></div>
+            <div><strong>PRN / ID:</strong> <span id="mobStudentPRN">Loading...</span></div>
+            <div><strong>Section:</strong> <span id="mobStudentSection">Loading...</span></div>
+            <div style="font-size:0.75rem;color:var(--text-muted);margin-top:0.35rem;">🔒 Restricted: Camera only. Cannot edit data.</div>
+          </div>
+          <div class="capture-box" style="min-height:260px;">
+            <video id="mobCaptureVideo" class="capture-preview" autoplay playsinline muted style="width:100%;border-radius:8px;"></video>
+            <canvas id="mobCaptureCanvas" style="display:none;"></canvas>
+            <button type="button" class="btn btn-primary" id="btnMobStartCamera">📷 Grant Camera Permission</button>
+            <button type="button" class="btn btn-success" id="btnMobCapture" style="display:none;width:100%;justify-content:center;">📸 Capture 15 Photos</button>
+            <div class="capture-progress" id="mobCaptureProgress">
+              <div class="capture-progress-bar" id="mobCaptureProgressBar"></div>
+            </div>
+            <div id="mobCaptureStatus" style="font-size:0.8rem;color:var(--text-muted);margin-top:0.5rem;"></div>
+          </div>
+          <button type="button" class="btn btn-success" id="btnMobSubmit" style="width:100%;justify-content:center;margin-top:1rem;padding:0.75rem;display:none;">
+            🚀 Submit Face Data to Faculty
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== PAGE 6: FACE TRAINING ===================== -->
+    <section id="pageTraining" class="page-view">
+      <div class="panel-card" style="max-width:800px;margin:0 auto;">
+        <div class="panel-header">
+          <div class="panel-title"><span>⚡ Train Face Recognition Model</span></div>
+        </div>
+        <div class="panel-body" style="text-align:center;padding:2.5rem 1.5rem;">
+          <div style="font-size:3rem;margin-bottom:1rem;">🧠</div>
+          <h2 style="font-size:1.5rem;margin-bottom:0.5rem;">LBPH Face Recognizer Training</h2>
+          <p style="color:var(--text-muted);max-width:580px;margin:0 auto 1.5rem auto;font-size:0.92rem;line-height:1.5;">
+            Extracts local texture features using OpenCV LBPH with CLAHE illumination enhancement for all registered students.
+          </p>
+          <div style="background:var(--bg-secondary);border:1px solid var(--border-color);border-radius:var(--radius-md);padding:1.25rem;max-width:500px;margin:0 auto 1.5rem auto;text-align:left;">
+            <div><strong>Model Status:</strong> <span id="trainStatusBadge" class="badge-present">&#10003; Loaded</span></div>
+            <div style="margin-top:0.5rem;"><strong>Students with Photos:</strong> <span id="trainStudentCount">--</span></div>
+            <div style="margin-top:0.5rem;"><strong>Model File:</strong> <code>models/trainer.yml</code></div>
+          </div>
+          <button type="button" class="btn btn-primary" id="btnExecuteTraining" style="font-size:1.05rem;padding:0.75rem 2rem;">
+            🚀 Start Training
+          </button>
+          <div id="trainProgressMsg" style="margin-top:1rem;font-size:0.88rem;color:var(--accent-emerald);"></div>
+          <div style="margin-top:2rem;">
+            <button class="btn btn-outline" onclick="location.hash='#face-testing'">
+              Next: Test Recognition &rarr;
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== PAGE 7: RECOGNITION TESTING ===================== -->
+    <section id="pageTesting" class="page-view">
+      <div class="panel-card">
+        <div class="panel-header" style="background:rgba(245,158,11,0.1);border-bottom-color:rgba(245,158,11,0.3);">
+          <div class="panel-title" style="color:#fbbf24;"><span>🧪 Face Recognition Testing Stage</span></div>
+          <span style="font-size:0.82rem;background:rgba(245,158,11,0.2);color:#fbbf24;padding:0.2rem 0.65rem;border-radius:9999px;font-weight:600;">
+            TEST MODE — NO ATTENDANCE MARKED
+          </span>
+        </div>
+        <div class="panel-body">
+          <div class="main-grid">
+            <div class="video-container">
+              <img id="testStreamImg" class="video-stream" style="display:none;" alt="Testing Stream">
+              <video id="testBrowserVideo" autoplay playsinline muted style="display:none;width:100%;height:100%;object-fit:contain;"></video>
+              <canvas id="testBrowserCanvas" style="display:none;"></canvas>
+              <div id="testCameraOff" class="camera-off-placeholder">
+                <div style="font-size:3rem;margin-bottom:1rem;">🧪</div>
+                <p style="color:#fbbf24;font-weight:600;">Camera Ready</p>
+                <p style="font-size:0.85rem;color:var(--text-muted);margin-top:0.4rem;">Click below to start testing</p>
+                <button class="btn btn-outline" id="btnStartTestCam" style="margin-top:1rem;border-color:#f59e0b;color:#fbbf24;">
+                  ▶ Start Test Camera
+                </button>
+              </div>
+              <div class="feed-hud-overlay" id="testHudOverlay" style="display:none;">
+                <div class="hud-badge" style="border-color:rgba(245,158,11,0.5);color:#fde68a;">
+                  <span class="live-dot" style="background:#f59e0b;"></span> TESTING ONLY
+                </div>
+              </div>
+            </div>
+            <div class="recognition-feed">
+              <div class="latest-recognition-card" style="border-color:rgba(245,158,11,0.4);">
+                <div class="latest-header" style="color:#fbbf24;"><span>● Testing Verification</span></div>
+                <div class="student-card-content">
+                  <div class="student-avatar" id="testStudentAvatar" style="background:linear-gradient(135deg,#d97706,#b45309);">?</div>
+                  <div class="student-details">
+                    <h4 id="testStudentName">Look at camera to test...</h4>
+                    <div>
+                      <span class="roll-badge" id="testStudentPRN">PRN: ---</span>
+                      <span class="section-badge" id="testStudentSection">Sec: -</span>
+                    </div>
+                    <div class="time-badge" id="testConfidenceBadge">Confidence: ---</div>
+                  </div>
+                </div>
+              </div>
+              <div style="background:var(--bg-secondary);border:1px solid var(--border-color);border-radius:var(--radius-md);padding:1rem;font-size:0.82rem;color:var(--text-muted);line-height:1.5;margin-top:0.75rem;">
+                <strong style="color:#fbbf24;display:block;margin-bottom:0.25rem;">ℹ️ Testing Protocol:</strong>
+                Verify registered students are correctly identified (&gt;65% confidence) and unknown faces are marked "Unknown". No data is saved in this mode.
+              </div>
+              <div style="margin-top:1rem;display:flex;flex-direction:column;gap:0.5rem;">
+                <button class="btn btn-outline" id="btnStopTestCam" style="display:none;border-color:#f59e0b;color:#fbbf24;">
+                  ⏹ Stop Test Camera
+                </button>
+                <button class="btn btn-success" onclick="location.hash='#start-attendance'" style="width:100%;justify-content:center;padding:0.75rem;">
+                  ✅ Testing Verified &bull; Start Attendance &rarr;
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== PAGE 8: SUBJECTS ===================== -->
+    <section id="pageSubjects" class="page-view">
+      <div class="panel-card">
+        <div class="panel-header">
+          <div class="panel-title"><span>📚 Subject Browser</span></div>
+          <input type="text" id="subjectSearchInput" class="input-control" placeholder="🔍 Search subjects..." style="width:280px;">
+        </div>
+        <div class="panel-body">
+          <div class="tabs-nav" style="margin-bottom:1.25rem;">
+            <button class="tab-btn active" id="tabBtnTheory" onclick="switchSubjectTab('theory')">📖 Theory Subjects (44)</button>
+            <button class="tab-btn" id="tabBtnLabs" onclick="switchSubjectTab('labs')">🔬 Practical Labs (19)</button>
+          </div>
+          <div id="subjectsGridTheory" class="subjects-grid"></div>
+          <div id="subjectsGridLabs" class="subjects-grid" style="display:none;"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== PAGE 9: START ATTENDANCE ===================== -->
+    <section id="pageStartAttendance" class="page-view">
+      <div class="panel-card" style="max-width:720px;margin:0 auto;">
+        <div class="panel-header">
+          <div class="panel-title"><span>🚀 Configure &amp; Start Attendance Session</span></div>
+        </div>
+        <div class="panel-body" style="padding:1.75rem;">
+          <form id="startSessionForm">
+            <div class="form-group">
+              <label for="sessionFacultyName">Faculty Name *</label>
+              <input type="text" id="sessionFacultyName" class="input-control" placeholder="Enter your name" style="width:100%;" required>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+              <div class="form-group">
+                <label for="sessionCategorySelect">Category *</label>
+                <select id="sessionCategorySelect" class="input-control" style="width:100%;">
+                  <option value="theory">📖 Theory (44 Subjects)</option>
+                  <option value="lab">🔬 Practical Lab (19)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="sessionSectionSelect">Class Section *</label>
+                <select id="sessionSectionSelect" class="input-control" style="width:100%;">
+                  <option value="All">All Sections (66)</option>
+                  <option value="B">Section B (64)</option>
+                  <option value="A">Section A (2)</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="sessionSubjectSelect">Select Subject *</label>
+              <select id="sessionSubjectSelect" class="input-control" style="width:100%;"></select>
+            </div>
+            <div class="form-group">
+              <label for="sessionPeriodSelect">Class Period *</label>
+              <select id="sessionPeriodSelect" class="input-control" style="width:100%;"></select>
+            </div>
+            <div style="background:var(--bg-secondary);border:1px solid var(--border-color);border-radius:var(--radius-sm);padding:1rem;margin:1.25rem 0;font-size:0.82rem;color:var(--text-muted);">
+              <strong>Session Rule:</strong> All students start as <strong>ABSENT</strong>. Camera detects faces and automatically marks PRESENT after 3 consecutive recognition frames. No student can be marked twice per session-period.
+            </div>
+            <div style="display:flex;gap:0.75rem;">
+              <button type="submit" class="btn btn-success" style="flex:1;justify-content:center;padding:0.85rem;font-size:1rem;">
+                📷 Start Live Attendance Session
+              </button>
+              <button type="button" class="btn btn-outline" id="btnStopSessionForm" style="display:none;flex:1;justify-content:center;padding:0.85rem;font-size:1rem;">
+                ⏹ Stop Current Session
+              </button>
+            </div>
+          </form>
+          <div id="activeSessionInfo" style="display:none;margin-top:1.5rem;background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.3);border-radius:var(--radius-md);padding:1rem;font-size:0.88rem;">
+            <strong style="color:#34d399;">Active Session:</strong>
+            <span id="activeSessionDetails"></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== PAGE 10: RECORDS ===================== -->
+    <section id="pageRecords" class="page-view">
+      <div class="panel-card">
+        <div class="panel-header">
+          <div class="panel-title"><span>📋 Attendance Records</span></div>
+          <div class="filter-group">
+            <select id="recordsSubjectFilter" class="input-control" style="max-width:200px;"></select>
+            <select id="recordsSectionFilter" class="input-control">
+              <option value="All">All Sections</option>
+              <option value="B">Section B</option>
+              <option value="A">Section A</option>
+            </select>
+            <input type="date" id="recordsDateFilter" class="input-control">
+            <button class="btn btn-outline" id="btnRefreshRecords">🔄 Refresh</button>
+          </div>
+        </div>
+        <div class="panel-body">
+          <div class="stats-grid" style="margin-bottom:1.5rem;">
+            <div class="stat-card stat-total"><div class="stat-info"><h3>Total Roster</h3><div class="stat-value" id="recTotalCount">66</div></div></div>
+            <div class="stat-card stat-present"><div class="stat-info"><h3>Present</h3><div class="stat-value" id="recPresentCount" style="color:#34d399;">0</div></div></div>
+            <div class="stat-card stat-absent"><div class="stat-info"><h3>Absent</h3><div class="stat-value" id="recAbsentCount" style="color:#fb7185;">66</div></div></div>
+            <div class="stat-card stat-subject"><div class="stat-info"><h3>Attendance %</h3><div class="stat-value" id="recPct">0%</div></div></div>
+          </div>
+          <div class="tabs-nav" style="margin-bottom:1.25rem;">
+            <button class="tab-btn active" id="btnTabPresent" onclick="switchRecordsTab('present')">✅ Present (<span id="countPresentTab">0</span>)</button>
+            <button class="tab-btn" id="btnTabAbsent" onclick="switchRecordsTab('absent')">❌ Absent (<span id="countAbsentTab">66</span>)</button>
+            <button class="tab-btn" id="btnTabRaw" onclick="switchRecordsTab('raw')">📄 Raw Logs</button>
+          </div>
+          <div id="tableContainerPresent" class="table-responsive">
+            <table class="custom-table">
+              <thead><tr>
+                <th>S.No</th><th>PRN</th><th>Name</th><th>Section</th>
+                <th>Subject</th><th>Period</th><th>Faculty</th><th>Time</th><th>Status</th>
+              </tr></thead>
+              <tbody id="tbodyPresent"><tr><td colspan="9" style="text-align:center;padding:2rem;">No students marked present yet.</td></tr></tbody>
+            </table>
+          </div>
+          <div id="tableContainerAbsent" class="table-responsive" style="display:none;">
+            <table class="custom-table">
+              <thead><tr>
+                <th>S.No</th><th>PRN</th><th>Name</th><th>Section</th><th>Subject</th><th>Status</th>
+              </tr></thead>
+              <tbody id="tbodyAbsent"><tr><td colspan="6" style="text-align:center;padding:2rem;">Loading...</td></tr></tbody>
+            </table>
+          </div>
+          <div id="tableContainerRaw" class="table-responsive" style="display:none;">
+            <table class="custom-table">
+              <thead><tr>
+                <th>ID</th><th>PRN</th><th>Name</th><th>Section</th>
+                <th>Subject</th><th>Period</th><th>Faculty</th><th>Date</th><th>Time</th><th>Status</th>
+              </tr></thead>
+              <tbody id="tbodyRaw"><tr><td colspan="10" style="text-align:center;padding:2rem;">Loading...</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== PAGE 11: EXPORT ===================== -->
+    <section id="pageExport" class="page-view">
+      <div class="panel-card" style="max-width:850px;margin:0 auto;">
+        <div class="panel-header">
+          <div class="panel-title"><span>📥 Export &amp; Google Sheets Sync</span></div>
+        </div>
+        <div class="panel-body">
+          <h3 style="font-size:1.1rem;margin-bottom:0.5rem;">Download Attendance Reports</h3>
+          <p style="color:var(--text-muted);font-size:0.85rem;margin-bottom:1.25rem;">
+            Columns: <code>Name, PRN, Section, Subject, Period, Faculty, Date, Time, Status</code>
+          </p>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-bottom:2rem;">
+            <a href="/api/export/excel" class="btn btn-success" style="padding:1rem;justify-content:center;font-size:0.95rem;">📊 Excel (.xlsx)</a>
+            <a href="/api/export/csv" class="btn btn-primary" style="padding:1rem;justify-content:center;font-size:0.95rem;">📄 CSV (.csv)</a>
+          </div>
+          <hr style="border-color:var(--border-color);margin-bottom:1.5rem;">
+          <h3 style="font-size:1.1rem;margin-bottom:0.5rem;">Google Sheets Webhook Sync</h3>
+          <form id="exportSettingsForm">
+            <div class="form-group">
+              <label for="expWebhookUrl">Google Apps Script Webhook URL</label>
+              <input type="url" id="expWebhookUrl" class="input-control" placeholder="https://script.google.com/macros/s/.../exec" style="width:100%;">
+            </div>
+            <div class="form-group">
+              <label for="expThreshold">Face Match Threshold (Lower = Stricter, Recommended: 65–75)</label>
+              <input type="number" id="expThreshold" class="input-control" min="40" max="95" value="72" style="width:140px;">
+            </div>
+            <button type="submit" class="btn btn-primary">💾 Save Settings</button>
+          </form>
+          <div style="margin-top:1.5rem;background:var(--bg-secondary);border:1px solid var(--border-color);border-radius:var(--radius-sm);padding:1rem;font-size:0.8rem;color:var(--text-muted);line-height:1.5;">
+            <strong style="color:#93c5fd;display:block;margin-bottom:0.35rem;">📋 Google Apps Script Code:</strong>
+            <pre style="background:#0b0f19;color:#a5b4fc;padding:0.65rem;border-radius:4px;overflow-x:auto;font-family:monospace;">function doPost(e) {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  var data = JSON.parse(e.postData.contents);
+  sheet.appendRow([data.name, data.prn, data.section, data.subject, data.period, data.faculty_name, data.date, data.time, data.status]);
+  return ContentService.createTextOutput(JSON.stringify({status:"success"})).setMimeType(ContentService.MimeType.JSON);
+}</pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- /container -->
+
+  <div class="toast-container" id="toastContainer"></div>
+
+  <footer>
+    <p>FACE RECOGNITION BASED ATTENDANCE MONITORING SYSTEM</p>
+  </footer>
+
+  <script src="/static/js/app.js"></script>
+</body>
+</html>
