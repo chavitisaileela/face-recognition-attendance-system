@@ -174,11 +174,14 @@ class FaceEngine:
                         gray_img = cv2.imread(img_path, cv2.IMREAD_GRAYSCALE)
                         if gray_img is None:
                             continue
-                        detected = self.face_cascade.detectMultiScale(
-                            gray_img, scaleFactor=1.1, minNeighbors=4, minSize=(50, 50)
-                        )
-                        face_roi = gray_img[detected[0][1]:detected[0][1] + detected[0][3],
-                                            detected[0][0]:detected[0][0] + detected[0][2]] if len(detected) > 0 else gray_img
+                        if gray_img.shape == (200, 200):
+                            face_roi = gray_img
+                        else:
+                            detected = self.face_cascade.detectMultiScale(
+                                gray_img, scaleFactor=1.1, minNeighbors=4, minSize=(50, 50)
+                            )
+                            face_roi = gray_img[detected[0][1]:detected[0][1] + detected[0][3],
+                                                detected[0][0]:detected[0][0] + detected[0][2]] if len(detected) > 0 else gray_img
                         face_resized = cv2.resize(face_roi, (200, 200))
                         faces.append(clahe.apply(face_resized))
                         labels.append(student_id)
