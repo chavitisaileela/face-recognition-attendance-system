@@ -331,7 +331,7 @@ class FaceEngine:
                     with self.lock:
                         label_id, distance = self.recognizer.predict(face_eq)
 
-                    confidence_pct = max(5, min(99, int(100 - (distance * 0.7))))
+                    confidence_pct = max(10, min(99, int(100 - (distance * 0.45))))
 
                     if distance <= threshold:
                         student = self.get_student_from_cache(label_id)
